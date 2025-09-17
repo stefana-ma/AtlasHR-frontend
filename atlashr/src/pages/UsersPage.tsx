@@ -1,0 +1,39 @@
+import { useEffect, useState } from "react";
+import { fetchUsers } from "../services/UserService.ts";
+import type {User} from "../types/User.ts";
+import { Box, Typography, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+
+interface AllUsersPageProps {
+    currentRole: string;
+}
+
+// eslint-disable-next-line no-empty-pattern
+export default function UsersPage({}: AllUsersPageProps) {
+    const [users, setUsers] = useState<User[]>([]);
+
+    useEffect(() => {
+        fetchUsers().then(setUsers).catch(console.error);
+    }, []);
+
+    return (
+        <Box sx={{ mx: "auto", mt: 5, maxWidth: 800 }}>
+            <Typography variant="h5" mb={2}>All Users</Typography>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Username</TableCell>
+                        <TableCell>Role</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {users.map(user => (
+                        <TableRow key={user.role}>
+                            <TableCell>{user.username}</TableCell>
+                            <TableCell>{user.role}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </Box>
+    );
+}
