@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchUsers } from "../services/UserService.ts";
 import type {User} from "../types/User.ts";
-import { Box, Typography, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-
-// interface AllUsersPageProps {
-//     currentRole: string;
-// }
+import {Box, Typography, Table, TableBody, TableCell, TableHead, TableRow, Container} from "@mui/material";
 
 export default function UsersPage() {
     const [users, setUsers] = useState<User[]>([]);
@@ -15,6 +11,7 @@ export default function UsersPage() {
     }, []);
 
     return (
+        <Container maxWidth="sm">
         <Box sx={{ mx: "auto", mt: 5, maxWidth: 800 }}>
             <Typography variant="h5" mb={2}>All Users</Typography>
             <Table>
@@ -34,5 +31,6 @@ export default function UsersPage() {
                 </TableBody>
             </Table>
         </Box>
+        </Container>
     );
 }

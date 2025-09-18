@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchAbsences, updateAbsence } from "../services/AbsenceService.ts";
 import type {Absence, Status} from "../types/Absence.ts";
-import { Box, Typography, Table, TableBody, TableCell, TableHead, TableRow, Button } from "@mui/material";
-
-// interface AllAbsencesPageProps {
-//     currentRole: string; // "MANAGER" sau alt rol
-// }
+import {Box, Typography, Table, TableBody, TableCell, TableHead, TableRow, Button, Container} from "@mui/material";
 
 export default function AllAbsencesPage() {
     const [absences, setAbsences] = useState<Absence[]>([]);
@@ -24,6 +20,7 @@ export default function AllAbsencesPage() {
     };
 
     return (
+        <Container maxWidth="sm">
         <Box sx={{ mx: "auto", mt: 5, maxWidth: 900 }}>
             <Typography variant="h5" mb={2}>All Absences</Typography>
             <Table>
@@ -54,5 +51,6 @@ export default function AllAbsencesPage() {
                 </TableBody>
             </Table>
         </Box>
+        </Container>
     );
 }

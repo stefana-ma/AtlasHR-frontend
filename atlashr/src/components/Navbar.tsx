@@ -1,9 +1,18 @@
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
+    const [token, setToken] = useState(localStorage.getItem("token"));
+    const [role, setRole] = useState(localStorage.getItem("role"));
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            setToken(localStorage.getItem("token"));
+            setRole(localStorage.getItem("role"));
+        };
+        window.addEventListener("storage", handleStorageChange);
+    }, [token]);
 
     const handleLogout = () => {
         localStorage.removeItem("token");

@@ -43,7 +43,7 @@ export default function RegisterForm() {
     return (
         <Box component="form" onSubmit={handleSubmit} sx={{ maxWidth: 400, mx: "auto", mt: 5 }}>
             <Typography variant="h5" mb={2}>Register</Typography>
-            <TextField label="Fullname" name="fullname" fullWidth margin="normal" value={form.fullName} onChange={handleChange} />
+            <TextField label="Fullname" name="fullName" fullWidth margin="normal" value={form.fullName} onChange={handleChange} />
             <TextField label="Username" name="username" fullWidth margin="normal" value={form.username} onChange={handleChange} />
             <TextField label="Email" name="email" fullWidth margin="normal" value={form.email} onChange={handleChange} />
             <TextField label="Password" name="password" type="password" fullWidth margin="normal" value={form.password} onChange={handleChange} />

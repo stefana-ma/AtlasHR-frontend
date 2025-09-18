@@ -7,6 +7,7 @@ import LoginForm from "./components/auth/LoginForm.tsx";
 import ProtectedRoute from './components/ProtectedRoutes.tsx';
 import Navbar from "./components/Navbar.tsx";
 import RequestAbsencePage from "./pages/RequestAbsencePage.tsx";
+import FeedbackPage from "./pages/FeedbackPage.tsx";
 
 function App() {
 
@@ -36,12 +37,12 @@ function App() {
                         </ProtectedRoute>
                     }
                     />
-                    {/*<Route path="/feedback" element={*/}
-                    {/*    <ProtectedRoute allowedRoles={["COWORKER"]}>*/}
-                    {/*        <FeedbackPage />*/}
-                    {/*    </ProtectedRoute>*/}
-                    {/*    }*/}
-                    {/*/>*/}
+                    <Route path="/feedback" element={
+                        <ProtectedRoute allowedRoles={["COWORKER"]}>
+                            <FeedbackPage />
+                        </ProtectedRoute>
+                        }
+                    />
                     <Route path="*" element={<h2>404 - Page Not Found</h2>}/>
                 </Routes>
             </Router>

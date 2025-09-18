@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import { TextField, Button, Box, Typography } from "@mui/material";
+import {TextField, Button, Box, Typography, Container} from "@mui/material";
 import { loginUser } from "../../services/AuthService.ts";
 import type {LoginRequest} from "../../types/Auth.ts";
 import { AxiosError } from "axios";
@@ -20,10 +20,11 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
         e.preventDefault();
         try {
             const res = await loginUser(form);
-            localStorage.setItem("token", res.token); // salvează JWT
+            localStorage.setItem("token", res.token);
             setMessage(`Logged in as: ${res.username}`);
             if (onLogin) onLogin({ username: res.username, role: res.role });
-            localStorage.setItem("role", res.role); // salvează role
+            localStorage.setItem("username", res.username);
+            localStorage.setItem("role", res.role);
             switch (res.role) {
                 case "MANAGER":
                     navigate("/users");
@@ -44,6 +45,7 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
     };
 
     return (
+        <Container maxWidth="sm" sx={{ mt: 5 }}>
         <Box component="form" onSubmit={handleSubmit} sx={{ maxWidth: 400, mx: "auto", mt: 5 }}>
             <Typography variant="h5" mb={2}>Login</Typography>
             <TextField label="Username" name="username" fullWidth margin="normal" value={form.username} onChange={handleChange} />
@@ -51,5 +53,6 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
             <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>Login</Button>
             {message && <Typography mt={2}>{message}</Typography>}
         </Box>
+        </Container>
     );
 }
