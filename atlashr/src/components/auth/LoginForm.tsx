@@ -3,6 +3,7 @@ import { TextField, Button, Box, Typography } from "@mui/material";
 import { loginUser } from "../../services/AuthService.ts";
 import type {LoginRequest} from "../../types/Auth.ts";
 import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface LoginFormProps {
     onLogin?: (data: { username: string; role: string }) => void;
@@ -11,6 +12,7 @@ interface LoginFormProps {
 export default function LoginForm({ onLogin }: LoginFormProps) {
     const [form, setForm] = useState<LoginRequest>({ username: "", password: "" });
     const [message, setMessage] = useState<string>("");
+    const navigate = useNavigate();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -21,6 +23,20 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
             localStorage.setItem("token", res.token); // salvează JWT
             setMessage(`Logged in as: ${res.username}`);
             if (onLogin) onLogin({ username: res.username, role: res.role });
+            localStorage.setItem("role", res.role); // salvează role
+            switch (res.role) {
+                case "MANAGER":
+                    navigate("/users");
+                    break;
+                case "COWORKER":
+                    navigate("/feedback");
+                    break;
+                case "EMPLOYEE":
+                    navigate("/absences/request");
+                    break;
+                default:
+                    navigate("/");
+            }
         } catch (err) {
             const error = err as AxiosError<{ error: string }>;
             setMessage(error.response?.data?.error || "Login failed");

@@ -3,8 +3,9 @@ import type { AbsenceRequest } from "../types/Absence";
 import { AbsenceType } from "../types/Absence";
 import { requestAbsence } from "../services/AbsenceService";
 import { Box, Container, Typography, TextField, FormControl, Select, MenuItem, Button, Alert } from "@mui/material";
+import {AxiosError} from "axios";
 
-const AbsencePage: React.FC = () => {
+const RequestAbsencePage: React.FC = () => {
     const [form, setForm] = useState<AbsenceRequest>({
         employeeId: "123", // This would typically come from user context/auth
         startDate: "",
@@ -34,7 +35,8 @@ const AbsencePage: React.FC = () => {
         try {
             await requestAbsence(absenceData);
             setMessage({ type: "success", text: "Absence request submitted successfully!" });
-        } catch (error: any) {
+        } catch (err) {
+            const error = err as AxiosError<{ error: string }>;
             setMessage({ type: "error", text: "Failed to submit absence request: " + error.message });
         }
     };
@@ -95,4 +97,4 @@ const AbsencePage: React.FC = () => {
     );
 };
 
-export default AbsencePage;
+export default RequestAbsencePage;

@@ -23,7 +23,7 @@ export const fetchAbsences = async (): Promise<Absence[]> => {
 };
 
 export const updateAbsence = async (id: number, status: string) => {
-    const res = await axios.put(`${API_BASE}/absences/${id}`, { status }, { headers: getAuthHeader() });
+    const res = await axios.patch(`${API_BASE}/absences/${id}/status`, { status }, { headers: getAuthHeader() });
     return res.data;
 };
 

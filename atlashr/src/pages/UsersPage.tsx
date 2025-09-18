@@ -3,12 +3,11 @@ import { fetchUsers } from "../services/UserService.ts";
 import type {User} from "../types/User.ts";
 import { Box, Typography, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
-interface AllUsersPageProps {
-    currentRole: string;
-}
+// interface AllUsersPageProps {
+//     currentRole: string;
+// }
 
-// eslint-disable-next-line no-empty-pattern
-export default function UsersPage({}: AllUsersPageProps) {
+export default function UsersPage() {
     const [users, setUsers] = useState<User[]>([]);
 
     useEffect(() => {

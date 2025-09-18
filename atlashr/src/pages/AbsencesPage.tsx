@@ -3,11 +3,11 @@ import { fetchAbsences, updateAbsence } from "../services/AbsenceService.ts";
 import type {Absence, Status} from "../types/Absence.ts";
 import { Box, Typography, Table, TableBody, TableCell, TableHead, TableRow, Button } from "@mui/material";
 
-interface AllAbsencesPageProps {
-    currentRole: string; // "MANAGER" sau alt rol
-}
+// interface AllAbsencesPageProps {
+//     currentRole: string; // "MANAGER" sau alt rol
+// }
 
-export default function AllAbsencesPage({ currentRole }: AllAbsencesPageProps) {
+export default function AllAbsencesPage() {
     const [absences, setAbsences] = useState<Absence[]>([]);
 
     useEffect(() => {
@@ -34,7 +34,7 @@ export default function AllAbsencesPage({ currentRole }: AllAbsencesPageProps) {
                         <TableCell>End</TableCell>
                         <TableCell>Type</TableCell>
                         <TableCell>Status</TableCell>
-                        {currentRole === "MANAGER" && <TableCell>Actions</TableCell>}
+                        <TableCell>Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -45,12 +45,10 @@ export default function AllAbsencesPage({ currentRole }: AllAbsencesPageProps) {
                             <TableCell>{absence.endDate}</TableCell>
                             <TableCell>{absence.absenceType}</TableCell>
                             <TableCell>{absence.status}</TableCell>
-                            {currentRole === "MANAGER" && (
-                                <TableCell>
+                            <TableCell>
                                     <Button onClick={() => handleUpdate(absence.id, "APPROVED")} sx={{ mr: 1 }}>Approve</Button>
                                     <Button onClick={() => handleUpdate(absence.id, "REJECTED")} color="error">Reject</Button>
-                                </TableCell>
-                            )}
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

@@ -3,12 +3,14 @@ import { TextField, Button, MenuItem, Box, Typography } from "@mui/material";
 import { registerUser } from "../../services/AuthService.ts";
 import type {RegisterRequest} from "../../types/Auth.ts";
 import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 
 const roles = ["EMPLOYEE", "MANAGER", "COWORKER"] as const;
 
 export default function RegisterForm() {
     const [form, setForm] = useState<RegisterRequest>({ fullName: "", username: "", email: "", password: "", role: "EMPLOYEE" });
     const [message, setMessage] = useState<string>("");
+    const navigate = useNavigate();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -19,6 +21,19 @@ export default function RegisterForm() {
         try {
             const res = await registerUser(form);
             setMessage(`User registered: ${res.username}.`);
+            switch (res.role) {
+                case "MANAGER":
+                    navigate("/users");
+                    break;
+                case "COWORKER":
+                    navigate("/feedback");
+                    break;
+                case "EMPLOYEE":
+                    navigate("/absences/request");
+                    break;
+                default:
+                    navigate("/");
+            }
         } catch (err) {
             const error = err as AxiosError<{ error: string }>;
             setMessage(error.response?.data?.error || "Error registering user");
